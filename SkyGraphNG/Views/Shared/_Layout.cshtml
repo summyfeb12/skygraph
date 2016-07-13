@@ -1,0 +1,92 @@
+﻿@{
+    bool loggedIn = Context.Request.Cookies.Count != 0;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyGraph</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="../" class="navbar-brand">SkyGraph</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li role="presentation"><a href="/">Home</a></li>
+                    <li role="presentation"><a href="/About">About</a></li>
+                    <li role="presentation"><a href="/Help">Help</a></li>
+                    <li role="presentation"><a href="/Team">Our Team</a></li>
+                    @if (loggedIn)
+                    {
+                        <li role="presentation"><a href="/Services">Services</a></li>
+                        <li role="presentation"><a href="/Login/LogoutUser">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li role="presentation"><a href="/Login">Login or Signup</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <header></header>
+    <div class="container-fluid">
+        <div class="row">
+            @if (Request.Url.PathAndQuery == "/")
+            {
+                <div class="col-md-12 custom-div" style="padding: 0; margin: 0; margin-top: -40px;">
+                    @RenderBody()
+                </div>
+
+            }
+            else
+            {
+                <div class="col-md-10 col-md-offset-1 custom-div">
+                    @if (!String.IsNullOrEmpty(ViewBag.Message))
+                    {
+                        if (ViewBag.Message.Contains("Success"))
+                        {
+                            <div class="alert alert-dismissible alert-success">@ViewBag.Message</div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-dismissible alert-danger">@ViewBag.Message</div>
+                        }
+                    }
+
+                    @RenderBody()
+                </div>
+            }
+        </div>
+    </div>
+    @if (Request.Url.PathAndQuery != "/")
+    { 
+        <footer class="footer text-center">
+            <div class="container">
+                <p>
+                    &copy; @DateTime.Now.Year - SkyGraph -
+                    <b>Group - 22, CS440, UIC </b>
+                </p>
+            </div>
+        </footer>
+    }
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

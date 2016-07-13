@@ -1,0 +1,132 @@
+﻿<!-- Services -->
+
+<div class="row text-center">
+    <h2>Our Services</h2>
+    <div class="col-md-12">
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#upload" class="tabClicked">Upload</a></li>
+            <li><a data-toggle="tab" href="#view" class="tabClicked">View</a></li>
+            <li><a data-toggle="tab" href="#predict" class="tabClicked">Predict</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <!-- Upload Panel-->
+            <div id="upload" class="tab-pane fade in active">
+                <div class="well bs-component">
+                    <form class="form-horizontal" method="post" action="/Services/UploadFile" enctype="multipart/form-data">
+                        <fieldset>
+                            <legend>Please Upload the .csv file of your business statistics</legend>
+                            <div class="form-group">
+                                <label for="FileUpload" class="col-lg-4 control-label">Browse File: </label>
+                                <div class="col-lg-8">
+                                    <input type="file" class="form-control" id="FileUpload" name="FileUpload">
+                                </div>
+
+                                
+
+                                <div class="col-lg-10">
+                                    <br />
+                                    <button type="reset" class="btn btn-primary">Clear</button>
+                                    <button type="submit" class="btn btn-primary">Upload</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+
+            <!--View Panel-->
+            <div id="view" class="tab-pane fade">
+                <h3>The charts for the analyzed data is given below</h3>
+                <div class="col-lg-12 text-center">
+                    <br />
+                    <div class="col-md-6">
+                        <img src="/Files/G1.png" )" alt="Drawing chart with HTML Helper" />
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/Files/G2.png" )" alt="Drawing chart with HTML Helper" />
+                    </div>
+                </div>
+            </div>
+
+
+            <!--Predict Panel-->
+            <div id="predict" class="tab-pane fade">
+                <h3>Predicted Sales Data</h3>
+                <div class="col-lg-12 text-center">
+                    <br />
+                    <div class="col-md-6">
+                        <img src="/Files/G3.png" )" alt="Drawing chart with HTML Helper" />
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/Files/G4.png" )" alt="Drawing chart with HTML Helper" />
+                    </div>
+                </div>
+                <br />
+                <h3>Report</h3>
+
+                @Html.ActionLink("Export", "/Export", new object { }, new { @class = "btn btn-primary" })
+
+                @Html.ActionLink("Send Email", "/SendEmail", new object { }, new { @class = "btn btn-primary" })
+
+                @if (ViewBag.Data.Rows.Count > 0)
+                {
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                @foreach (var col in ViewBag.Data.Columns)
+                                {
+                                    <td>@col</td>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var row in ViewBag.Data.Rows)
+                            {
+                                <tr>
+
+                                    @for (int i = 0; i < ViewBag.Data.Columns.Count; i++)
+                                    {
+                                        <td>@row[i]</td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        /* $('.loading').hide();
+
+         function SubmitLink() {
+             $.ajax({
+                 url: '/Services/UploadFile',
+                 beforeSend: function () {
+                     //display Progress bar here
+                     $('.loading').show();
+                     console.log("T");
+                 },
+
+                 success: function (result) {
+                     $('.loading').hide();
+                     console.log("F");
+                 },
+                 async: false,
+                 cache: false
+             });
+
+         }*/
+    </script>
+
+  
+}
